@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SongList.Models;
 
+//Uppgift 1
 public class Song {
     public int Id {get; set;}
 
