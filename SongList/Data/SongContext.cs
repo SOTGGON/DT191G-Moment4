@@ -9,4 +9,5 @@ public class SongContext : DbContext {
     }
 
     public DbSet<Song> Songs {get; set;} = null;
+    public DbSet<Artist> Artists {get; set;} = null;
 }

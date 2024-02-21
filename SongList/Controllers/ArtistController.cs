@@ -12,51 +12,47 @@ namespace SongList.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SongController : ControllerBase
+    public class ArtistController : ControllerBase
     {
         private readonly SongContext _context;
 
-        public SongController(SongContext context)
+        public ArtistController(SongContext context)
         {
             _context = context;
         }
 
-        // GET: api/Song
+        // GET: api/Artist
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Song>>> GetSongs()
+        public async Task<ActionResult<IEnumerable<Artist>>> GetArtists()
         {
-            var songs = await _context.Songs.Include(s => s.ArtistInfo).ToListAsync();
-            return songs;
+            return await _context.Artists.ToListAsync();
         }
 
-        // GET: api/Song/5
+        // GET: api/Artist/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Song>> GetSong(int id)
+        public async Task<ActionResult<Artist>> GetArtist(int id)
         {
-            var song = await _context.Songs.FindAsync(id);
+            var artist = await _context.Artists.FindAsync(id);
 
-            if (song == null)
+            if (artist == null)
             {
                 return NotFound();
             }
 
-            return song;
+            return artist;
         }
 
-        // PUT: api/Song/5
+        // PUT: api/Artist/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutSong(int id, Song song)
+        public async Task<IActionResult> PutArtist(int id, Artist artist)
         {
-            if (id != song.Id)
+            if (id != artist.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(song).State = EntityState.Modified;
-
-            // Ställ in artistegenskaper
-            song.ArtistInfo = await _context.Artists.FindAsync(song.ArtistId);
+            _context.Entry(artist).State = EntityState.Modified;
 
             try
             {
@@ -64,7 +60,7 @@ namespace SongList.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!SongExists(id))
+                if (!ArtistExists(id))
                 {
                     return NotFound();
                 }
@@ -77,39 +73,36 @@ namespace SongList.Controllers
             return NoContent();
         }
 
-        // POST: api/Song
+        // POST: api/Artist
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Song>> PostSong(Song song)
+        public async Task<ActionResult<Artist>> PostArtist(Artist artist)
         {
-            // Ställ in artistegenskaper
-            song.ArtistInfo = await _context.Artists.FindAsync(song.ArtistId);
-            
-            _context.Songs.Add(song);
+            _context.Artists.Add(artist);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetSong", new { id = song.Id }, song);
+            return CreatedAtAction("GetArtist", new { id = artist.Id }, artist);
         }
 
-        // DELETE: api/Song/5
+        // DELETE: api/Artist/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteSong(int id)
+        public async Task<IActionResult> DeleteArtist(int id)
         {
-            var song = await _context.Songs.FindAsync(id);
-            if (song == null)
+            var artist = await _context.Artists.FindAsync(id);
+            if (artist == null)
             {
                 return NotFound();
             }
 
-            _context.Songs.Remove(song);
+            _context.Artists.Remove(artist);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool SongExists(int id)
+        private bool ArtistExists(int id)
         {
-            return _context.Songs.Any(e => e.Id == id);
+            return _context.Artists.Any(e => e.Id == id);
         }
     }
 }

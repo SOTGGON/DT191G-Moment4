@@ -17,4 +17,10 @@ public class Song {
 
     [Required]
     public string? Category {get; set;}
+
+    // Foreign Key
+    public int ArtistId { get; set; }
+
+    // Navigation Property
+    public Artist ArtistInfo { get; set; }
 }
