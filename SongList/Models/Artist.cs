@@ -19,5 +19,5 @@ public class Artist {
     public string? Genre {get; set;}
 
     // Navigation Property
-    public ICollection<Song> Songs { get; set; }
+    public virtual ICollection<Song> Songs { get; set; }
 }

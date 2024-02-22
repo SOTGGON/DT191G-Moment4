@@ -7,9 +7,6 @@ public class Song {
     public int Id {get; set;}
 
     [Required]
-    public string? Artist {get; set;}
-
-    [Required]
     public string? Title {get; set;}
 
     [Required]
@@ -22,5 +19,5 @@ public class Song {
     public int ArtistId { get; set; }
 
     // Navigation Property
-    public Artist ArtistInfo { get; set; }
+    public Artist Artist { get; set; }
 }

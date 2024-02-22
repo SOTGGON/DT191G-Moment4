@@ -25,7 +25,7 @@ namespace SongList.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Song>>> GetSongs()
         {
-            var songs = await _context.Songs.Include(s => s.ArtistInfo).ToListAsync();
+            var songs = await _context.Songs.Include(s => s.Artist).ToListAsync();
             return songs;
         }
 
@@ -56,7 +56,7 @@ namespace SongList.Controllers
             _context.Entry(song).State = EntityState.Modified;
 
             // Ställ in artistegenskaper
-            song.ArtistInfo = await _context.Artists.FindAsync(song.ArtistId);
+            song.Artist = await _context.Artists.FindAsync(song.ArtistId);
 
             try
             {
@@ -83,7 +83,7 @@ namespace SongList.Controllers
         public async Task<ActionResult<Song>> PostSong(Song song)
         {
             // Ställ in artistegenskaper
-            song.ArtistInfo = await _context.Artists.FindAsync(song.ArtistId);
+            song.Artist = await _context.Artists.FindAsync(song.ArtistId);
             
             _context.Songs.Add(song);
             await _context.SaveChangesAsync();
