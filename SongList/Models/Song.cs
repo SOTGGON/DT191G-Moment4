@@ -19,5 +19,5 @@ public class Song {
     public int ArtistId { get; set; }
 
     // Navigation Property
-    public Artist Artist { get; set; }
+    public virtual Artist? Artist { get; set; }
 }
